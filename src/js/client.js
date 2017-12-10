@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
-import { createStore } from './store/createStore';
+import { createStore } from './store';
 import ApiClient from './helpers/ApiClient';
 import { ReduxAsyncConnect } from 'redux-connect';
 import getRoutes from './routes';

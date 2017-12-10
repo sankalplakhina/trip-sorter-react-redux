@@ -71,6 +71,7 @@
     "express": "^4.14.0",
     "http-proxy": "^1.15.1",
     "isomorphic-fetch": "^2.2.1",
+    "jkstra": "0.0.6",
     "lodash": "^4.17.4",
     "morgan": "^1.7.0",
     "pretty-error": "^2.0.1",

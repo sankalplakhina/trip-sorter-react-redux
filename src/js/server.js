@@ -14,7 +14,7 @@ import createHistory from 'react-router/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
 import { ReduxAsyncConnect, loadOnServer } from 'redux-connect';
 
-import { createStore } from './store/createStore';
+import { createStore } from './store';
 import ApiClient from './helpers/ApiClient';
 
 import getRoutes from './routes';
