@@ -14,7 +14,7 @@ export function loadSuccess(data) {
   };
 }
 
-export function load() {
+export function loadDeals() {
     // returning a thunk as this is any async action
     // dispatch and getState and default params from
     // thunk library, client is an extra param required
@@ -27,7 +27,7 @@ export function load() {
           type: actionTypes.LOAD
         });
 
-        return client.get('/api/response').then(data => {
+        return client.get('/api/deals').then(data => {
             dispatch(loadSuccess(data));
         })
         .catch(error => {

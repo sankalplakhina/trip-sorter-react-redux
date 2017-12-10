@@ -1,6 +1,6 @@
 import React from 'react';
 import { IndexRoute, Route } from 'react-router';
-import AppContainer from 'src/js/components/appContainer';
+import App from 'src/js/components/app';
 import Home from 'src/js/components/pages/home';
 import Results from 'src/js/components/pages/results';
 import NotFound from 'src/js/components/pages/notFound';
@@ -8,7 +8,7 @@ import NotFound from 'src/js/components/pages/notFound';
 export default (store) => {
 
     return (
-        <Route path="/" component={AppContainer}>
+        <Route path="/" component={App}>
       		<IndexRoute component={Home} />
             <Route path="home" component={Home}/>
             <Route path="results" component={Results}/>

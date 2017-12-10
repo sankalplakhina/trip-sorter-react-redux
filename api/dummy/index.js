@@ -1,10 +1,10 @@
 import express from 'express';
 
 // controllers
-import response from './controllers/response';
+import deals from './controllers/deals';
 
 const router = express.Router();
 
-router.get('/response', response);
+router.get('/deals', deals);
 
 module.exports = router;

@@ -1,0 +1,37 @@
+@headerHeight: 50px;
+@footerHeight: 60px;
+
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	margin-bottom: @footerHeight;
+}
+
+.header-text {
+	line-height: @headerHeight;
+	font-size: 22px;
+}
+
+.footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: @footerHeight;
+	background-color: #f5f5f5;
+}
+
+.page-body {
+  padding: @footerHeight 15px 0;
+}
+
+.container .text-muted {
+  margin: 20px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}

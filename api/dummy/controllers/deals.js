@@ -1,4 +1,4 @@
-const response = (req, res) => {
+const deals = (req, res) => {
 	res.json({
 	  "currency": "EUR",
 	  "deals": [
@@ -1734,4 +1734,4 @@ const response = (req, res) => {
 	});
 }
 
-export default response;
+export default deals;

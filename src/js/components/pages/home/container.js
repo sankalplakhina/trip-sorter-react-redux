@@ -1,21 +1,10 @@
-import { asyncConnect } from 'redux-connect';
-import { homeMessageSelector } from './selectors';
-import { load } from './actions';
+import { connect } from 'react-redux';
+import * as appSelectors from 'src/js/components/app/selectors';
 import Home from './home';
-
-const asyncProps = {
-    promise: ({ store: { dispatch, getState } }) => {
-    	const state = getState();
-    	if (true || !state.home.loaded) {
-    		return dispatch(load());
-    	}
-    	return null;
-    }
-};
 
 function mapStateToProps(state) {
   	return {
-  		message: homeMessageSelector(state)
+  		message: appSelectors.getCurrency(state)
   	};
 }
 
@@ -23,4 +12,4 @@ function mapDispatchToProps(dispatch) {
   	return {};
 }
 
-export default asyncConnect([asyncProps], mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
