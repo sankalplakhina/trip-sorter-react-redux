@@ -1,13 +1,13 @@
 import React from 'react';
 import Header from 'src/js/components/header';
 import Footer from 'src/js/components/footer';
-import { getStore } from 'src/js/store';
-import deals from './deals';
+import deals from 'src/js/components/pages/results/deals';
 
 class App extends React.Component {
 
 	componentDidMount(){
-		deals.createGraph(getStore().getState());
+		// create graph here so that we have the graph ready before user makes search from home page
+		deals.createGraph();
 	}
 
 	render() {

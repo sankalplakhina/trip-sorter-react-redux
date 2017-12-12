@@ -16,7 +16,7 @@ class Home extends React.Component {
 
 	handleSearch(...args) {
 		console.log('search', args);
-		this.props.onSearch('London', 'Moscow', 'cheap');
+		this.props.onSearch('London', 'Moscow', 'fastest');
 	}
 
 	render() {
@@ -25,8 +25,7 @@ class Home extends React.Component {
 			<div className="home container">
 		  		<Helmet title="Home | Trip Sorter"/>
 		  		<div className="row">
-		  			<div
-		  				className="col-xs-12 col-sm-4 col-sm-offset-4 text-center well">
+		  			<div className="col-xs-12 col-sm-4 col-sm-offset-4 text-center well">
 
 	  						<div className="col-xs-12 dd-from">
 			  					<Dropdown

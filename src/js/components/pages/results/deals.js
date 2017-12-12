@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import jKstra from 'jkstra';
-import * as appSelectors from './selectors';
+import { getStore } from 'src/js/store';
+import * as appSelectors from 'src/js/components/app/selectors';
 
 class Deals {
 	constructor() {
@@ -13,6 +14,9 @@ class Deals {
 
 		this.dijkstra = null;
 		this.allLocations = [];
+
+		// graph only needs to be created once
+		this.createGraph = _.once(this.createGraph.bind(this));
 	}
 
 	getCost({ cost, discount }) {
@@ -33,7 +37,7 @@ class Deals {
 		return [fromVertex, toVertex];
 	}
 
-	createGraph(state){
+	createGraph(state = getStore().getState()){
 
 		const { graph, vertices } = this.deals;
 
@@ -121,19 +125,22 @@ class Deals {
 		}, this.deals.edges);
 
 		this.dijkstra = new jKstra.algos.Dijkstra(graph);
+
+		return this;
 	}
 
-	findShortestPath(from, to, sortType = "cheapest") {
+	findShortestPath(from, to, sortType) {
+		const [fromVertex, toVertex] = this.getFromToVertices(from, to)
 
-		const [fromVertex, toVertex] = this.getFromToVertices(_.upperFirst(from.toLowerCase()), _.upperFirst(to.toLowerCase()))
+		if (fromVertex && toVertex) {
+			return this.dijkstra
+				.shortestPath(fromVertex, toVertex, {
+					edgeCost: (e) =>
+					(sortType.toLowerCase() === "fastest")? e.data.duration : e.data.cost
+				});
+		}
 
-		// TODO: handle index === -1 case
-		const path = this.dijkstra.shortestPath(fromVertex, toVertex, {
-						edgeCost: (e) =>
-						(sortType.toLowerCase() === "fastest")? e.data.duration : e.data.cost
-					});
-
-		return path;
+		return null;
 	}
 }
 

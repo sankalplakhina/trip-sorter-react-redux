@@ -1,3 +1,3 @@
-import Results from './results';
+import Results from './container';
 
 export default Results;
