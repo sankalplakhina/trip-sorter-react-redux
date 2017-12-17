@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router';
+import classNames from 'classnames';
 import { bindHandlers } from 'react-bind-handlers';
 
 class Results extends React.Component {
@@ -10,6 +11,7 @@ class Results extends React.Component {
 
 		this.state = {
 			isInvalidInputs: false,
+			isSamePath: false,
 		};
 	}
 
@@ -37,6 +39,17 @@ class Results extends React.Component {
 		if (from && to && !shortestPath && !nextProps.shortestPath && !this.state.isInvalidInputs) {
 			this.setState({
 				isInvalidInputs: true,
+			});
+		}
+
+		if (_.isEqual(nextProps.shortestPath, shortestPath)) {
+			console.log('tehy are same');
+			this.setState({
+				isSamePath: true
+			});
+		} else if (this.state.isSamePath) {
+			this.setState({
+				isSamePath: false
 			});
 		}
 	}
@@ -67,7 +80,7 @@ class Results extends React.Component {
 
 	render() {
 		const { shortestPath, location : { query: { from, to, sort } } } = this.props;
-		const { isInvalidInputs } = this.state;
+		const { isInvalidInputs, isSamePath } = this.state;
 
 		return (
 			<div className="results">
@@ -75,9 +88,16 @@ class Results extends React.Component {
 		  		<div className="row">
 		  			<div className="results-container col-xs-12 col-sm-4 col-sm-offset-4 text-center well-sm">
 		  				{
-		  					shortestPath && (
+		  					shortestPath && !isSamePath && (
 		  						<div className="results-header">
 		  							{`Found it! And the `}<b>{(sort && sort.toLowerCase() === "fastest")? 'fastest' : 'cheapest'}</b>{` way is:`}
+		  						</div>
+		  					)
+		  				}
+		  				{
+		  					shortestPath && isSamePath && (
+		  						<div className="results-header">
+		  							{`Same result! It appears following is both `}<b>{`cheapest and fastest`}</b>{` way:`}
 		  						</div>
 		  					)
 		  				}
@@ -137,7 +157,9 @@ class Results extends React.Component {
 	  							<a
 	  								key="alternate"
 	  								onClick={this.handleSwitchSort}
-	  								className="results-header results-header--link">
+	  								className={classNames("results-header results-header--link", {
+	  									'hidden': isSamePath
+	  								})}>
 	  								{`Check the `}<b>{(sort && sort.toLowerCase() === "fastest")? 'cheapest' : 'fastest'}</b>{` route instead?`}
 	  							</a>
 	  						),
