@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-class NotFound extends React.PureComponent {
-  render() {
+const NotFound = () => {
     return (
-    	<div>
-    		404 Not Found
-    		<Link to="/">Take me to main page!</Link>
+    	<div className="row">
+    		<h4 className="col-xs-offset-4 col-xs-4">
+    			Ooops! You have reached a 404 Not Found situation.
+    			Let's get you home?	<Link to="/">Go Home</Link>
+    		</h4>
     	</div>
     );
-  }
 }
 
 export default NotFound;
