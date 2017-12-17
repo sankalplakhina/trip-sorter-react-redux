@@ -138,6 +138,7 @@ class Results extends React.Component {
 			  					<div className="col-xs-12 reset-btn">
 			  						<h3>{isInvalidInputs? 'Oops!' : 'Loading...'}</h3>
 			  						<p>{isInvalidInputs? 'We found nothing! Check your inputs maybe? #lifeCanBeHard' : 'Be patient! We are Trip"sorting" it out! #noPunIntended'}</p>
+    								{isInvalidInputs && (<p>Let's get you home?	<Link to="/">Go Home</Link></p>)}
 			  					</div>
 		  					)
 	  					}

@@ -24,6 +24,7 @@ class Html extends React.Component {
                     {head.base.toComponent()}
                     {head.title.toComponent()}
                     {head.meta.toComponent()}
+                    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, viewport-fit=cover"/>
                     {
                         Object.keys(assets.styles).map((style, key) =>
                             <link href={assets.styles[style]}

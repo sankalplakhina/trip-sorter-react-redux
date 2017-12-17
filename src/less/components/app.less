@@ -8,6 +8,7 @@ html {
 
 body {
 	margin-bottom: @footerHeight;
+	font-size: 13px;
 }
 
 .header-text {
@@ -27,14 +28,22 @@ body {
 	width: 100%;
 	height: @footerHeight;
 	background-color: #f5f5f5;
+
+	.social-links {
+		margin: 20px 0;
+
+		&-link {
+			margin: 0 10px;
+			display: inline-block;
+			img {
+				height: 25px;
+			}
+		}
+	}
 }
 
 .page-body {
 	padding: @footerHeight 15px 10px;
-}
-
-.container .text-muted {
-	margin: 20px 0;
 }
 
 .footer > .container {
