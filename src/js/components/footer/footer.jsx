@@ -7,7 +7,7 @@ class Footer extends React.Component {
 	      <div className="container text-center">
 	        <div className="social-links">
 		        <a
-		        	href="https://github.com/sankalplakhina"
+		        	href="https://github.com/sankalplakhina/trip-sorter-react-redux"
 		        	target="_blank"
 		        	className="social-links-link"
 		        	title="View Sankalp Lakhina's Github profile">
