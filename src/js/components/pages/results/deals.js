@@ -132,7 +132,7 @@ class Deals {
 	findShortestPath(from, to, sortType) {
 		const [fromVertex, toVertex] = this.getFromToVertices(from, to)
 
-		if (fromVertex && toVertex && (fromVertex !== toVertex)) {
+		if (fromVertex && toVertex) {
 			return this.dijkstra
 				.shortestPath(fromVertex, toVertex, {
 					edgeCost: (e) =>

@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router';
+import { bindHandlers } from 'react-bind-handlers';
 
 class Results extends React.Component {
 	constructor(){
@@ -13,11 +14,15 @@ class Results extends React.Component {
 	}
 
 	componentDidMount(){
-		const { location : { query: { from, to, sort } }, shortestPath, onMount } = this.props;
+		const { location : { query: { from = '', to = '', sort = '' } }, shortestPath, onFindPath } = this.props;
 
 		if (!shortestPath) {
-			if (from && to) {
-				onMount(from, to, sort);
+			const fromParsed = _.upperFirst(from.toLowerCase());
+			const toParsed = _.upperFirst(to.toLowerCase());
+			const sortParsed = sort.toLowerCase();
+
+			if (fromParsed && toParsed && fromParsed !== toParsed) {
+				onFindPath(fromParsed, toParsed, sortParsed);
 			} else {
 				this.setState({
 					isInvalidInputs: true,
@@ -34,6 +39,14 @@ class Results extends React.Component {
 				isInvalidInputs: true,
 			});
 		}
+	}
+
+	handleSwitchSort() {
+		const { location : { query: { from, to, sort } }, onSearch, onFindPath } = this.props;
+		const sortType = (sort && sort.toLowerCase() === "fastest")? 'cheapest' : 'fastest';
+
+		onFindPath(from, to, sortType);
+		onSearch(from, to, sortType);
 	}
 
 	getCalculatedCost(cost, discount) {
@@ -53,7 +66,7 @@ class Results extends React.Component {
 	}
 
 	render() {
-		const { shortestPath, location : { query: { sort } } } = this.props;
+		const { shortestPath, location : { query: { from, to, sort } } } = this.props;
 		const { isInvalidInputs } = this.state;
 
 		return (
@@ -121,6 +134,14 @@ class Results extends React.Component {
 	  							</div>
 	  						),
 	  						(
+	  							<a
+	  								key="alternate"
+	  								onClick={this.handleSwitchSort}
+	  								className="results-header results-header--link">
+	  								{`Check the `}<b>{(sort && sort.toLowerCase() === "fastest")? 'cheapest' : 'fastest'}</b>{` route instead?`}
+	  							</a>
+	  						),
+	  						(
   								<div
   									key="reset"
   									className="col-xs-12 reset-btn">
@@ -149,4 +170,4 @@ class Results extends React.Component {
 	}
 }
 
-export default Results;
+export default bindHandlers(Results);

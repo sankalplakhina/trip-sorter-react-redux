@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import Results from './results';
 import { findShortestPath } from './actions';
 import { getShortestPath } from './selectors';
@@ -13,7 +14,10 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch, ownProps) {
   	return {
-  		onMount: (from, to, sort) => dispatch(findShortestPath(from, to, sort)),
+  		onFindPath: (from, to, sort) => dispatch(findShortestPath(from, to, sort)),
+  		onSearch: (from, to, sort) => {
+  			ownProps.router.replace(`/results?from=${from}&to=${to}&sort=${sort}`);
+  		}
   	};
 }
 

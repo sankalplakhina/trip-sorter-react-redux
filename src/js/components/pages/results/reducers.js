@@ -12,11 +12,7 @@ export default function results(state = {}, action = {}) {
 	}
 }
 
-function updateShortestPath(state, action) {
-	const from = _.upperFirst(action.from.toLowerCase());
-	const to = _.upperFirst(action.to.toLowerCase());
-	const sort = action.sort.toLowerCase();
-
+function updateShortestPath(state, { from, to, sort}) {
 	const path = deals.createGraph().findShortestPath(from, to, sort);
 
 	return _.defaults({
