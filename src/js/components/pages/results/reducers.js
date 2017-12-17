@@ -20,6 +20,6 @@ function updateShortestPath(state, action) {
 	const path = deals.createGraph().findShortestPath(from, to, sort);
 
 	return _.defaults({
-		[`${from}-${to}-${sort}`]: path && path.map((pathInfo) => pathInfo.data),
+		[`${from}-${to}-${sort}`]: (path && path.map((pathInfo) => pathInfo.data)) || false,
 	}, state);
 }

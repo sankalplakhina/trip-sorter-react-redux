@@ -8,24 +8,29 @@ class Results extends React.Component {
 		super();
 
 		this.state = {
-			isWrongInputs: false,
-			isEmptyInputs: false,
+			isInvalidInputs: false,
 		};
 	}
 
 	componentDidMount(){
-		console.log('Results componentDidMount', this.props);
-
 		const { location : { query: { from, to, sort } }, onMount } = this.props;
 
 		if (from && to) {
 			onMount(from, to, sort);
+		} else {
+			this.setState({
+				isInvalidInputs: true,
+			});
 		}
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (this.props.from && this.props.to && !this.props.shortestPath && !nextProps.shortestPath) {
-			console.log('mila nahi');
+		const { location : { query: { from, to } }, shortestPath } = this.props;
+
+		if (from && to && !shortestPath && !nextProps.shortestPath && !this.state.isInvalidInputs) {
+			this.setState({
+				isInvalidInputs: true,
+			});
 		}
 	}
 
@@ -47,7 +52,8 @@ class Results extends React.Component {
 
 	render() {
 		const { shortestPath, location : { query: { sort } } } = this.props;
-		console.log('shortestPath', shortestPath);
+		const { isInvalidInputs } = this.state;
+
 		return (
 			<div className="results">
 		  		<Helmet title="Results | TripSorter"/>
@@ -56,7 +62,7 @@ class Results extends React.Component {
 		  				{
 		  					shortestPath && (
 		  						<div className="results-header">
-		  							{`Found it! And the ${(sort.toLowerCase() === "fastest")? 'fastest' : 'cheapest'} way is:`}
+		  							{`Found it! And the `}<b>{(sort && sort.toLowerCase() === "fastest")? 'fastest' : 'cheapest'}</b>{` way is:`}
 		  						</div>
 		  					)
 		  				}
@@ -126,16 +132,13 @@ class Results extends React.Component {
 		  					)]
 	  					}
 	  					{
-	  						!shortestPath?
-	  						(
+	  						!shortestPath && (
 			  					<div className="col-xs-12 reset-btn">
-			  						<h3>Loading...</h3>
-			  						<p>Be patient! We are Trip"sorting" it out! #noPunIntended</p>
+			  						<h3>{isInvalidInputs? 'Oops!' : 'Loading...'}</h3>
+			  						<p>{isInvalidInputs? 'We found nothing! Check your inputs maybe? #lifeCanBeHard' : 'Be patient! We are Trip"sorting" it out! #noPunIntended'}</p>
 			  					</div>
 		  					)
-		  					: null
 	  					}
-
 		  			</div>
 		  		</div>
 			</div>
