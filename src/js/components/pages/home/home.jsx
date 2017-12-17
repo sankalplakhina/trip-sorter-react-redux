@@ -1,26 +1,51 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import classNames from 'classnames';
+import Dropdown from 'react-dropdown';
 import { Link } from 'react-router';
 import { bindHandlers } from 'react-bind-handlers';
-import Dropdown from 'react-dropdown';
 
 class Home extends React.Component {
+	constructor(){
+		super();
 
-	handleFromSelect(...args){
-		console.log('yo from', args);
+		this.state = {
+			sort: 'cheapest',
+			from: '',
+			to: '',
+		};
+
+		this.handleSelectCheapestSort = this.handleSelectSort.bind(this, "cheapest");
+		this.handleSelectFastestSort = this.handleSelectSort.bind(this, "fastest");
 	}
 
-	handleToSelect(...args){
-		console.log('yo to', args);
+	handleFromSelect(selectedFrom){
+		this.setState({
+			from: selectedFrom.value,
+		})
 	}
 
-	handleSearch(...args) {
-		console.log('search', args);
-		this.props.onSearch('London', 'Moscow', 'fastest');
+	handleToSelect(selectedTo){
+		this.setState({
+			to: selectedTo.value,
+		})
+	}
+
+	handleSelectSort(sort) {
+		this.setState({
+			sort,
+		});
+	}
+
+	handleSearch() {
+		const { from, to, sort } = this.state;
+		this.props.onSearch(from, to, sort);
 	}
 
 	render() {
 		const { fromToOptions } = this.props;
+		const { from, to, sort } = this.state;
+
 		return (
 			<div className="home container">
 		  		<Helmet title="Home | Trip Sorter"/>
@@ -29,7 +54,7 @@ class Home extends React.Component {
 
 	  						<div className="col-xs-12 dd-from">
 			  					<Dropdown
-			  						className=""
+			  						value={from}
 			  						options={fromToOptions.from}
 			  						onChange={this.handleFromSelect}
 			  						placeholder="From" />
@@ -37,22 +62,38 @@ class Home extends React.Component {
 
 	  						<div className="col-xs-12 dd-to">
 		  						<Dropdown
-		  							className=""
+		  							value={to}
 		  							options={fromToOptions.to}
 		  							onChange={this.handleToSelect}
 		  							placeholder="To" />
 	  						</div>
 
 	  						<div className="col-xs-12 sort-optn">
-		  						<div className="col-xs-6 optn selected">Cheapest</div>
-		  						<div className="col-xs-6 optn">Fastest</div>
+		  						<div
+		  							className={classNames("col-xs-6 optn", {
+		  								'selected': (sort === "cheapest"),
+		  							})}
+		  							onClick={this.handleSelectCheapestSort}
+		  						>
+		  							Cheapest
+		  						</div>
+		  						<div
+		  							className={classNames("col-xs-6 optn", {
+		  								'selected': (sort === "fastest"),
+		  							})}
+		  							onClick={this.handleSelectFastestSort}
+		  						>
+		  							Fastest
+		  						</div>
 	  						</div>
 
 	  						<div className="col-xs-12 search-btn">
 		  						<button
 		  							type="button"
 		  							className="btn btn-success"
-		  							onClick={this.handleSearch}>
+		  							disabled={!(from && to && sort)}
+		  							onClick={this.handleSearch}
+		  						>
 		  							Search
 		  						</button>
 	  						</div>

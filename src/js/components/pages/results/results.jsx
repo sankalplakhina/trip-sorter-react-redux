@@ -13,14 +13,16 @@ class Results extends React.Component {
 	}
 
 	componentDidMount(){
-		const { location : { query: { from, to, sort } }, onMount } = this.props;
+		const { location : { query: { from, to, sort } }, shortestPath, onMount } = this.props;
 
-		if (from && to) {
-			onMount(from, to, sort);
-		} else {
-			this.setState({
-				isInvalidInputs: true,
-			});
+		if (!shortestPath) {
+			if (from && to) {
+				onMount(from, to, sort);
+			} else {
+				this.setState({
+					isInvalidInputs: true,
+				});
+			}
 		}
 	}
 
